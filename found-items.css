@@ -1,0 +1,108 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('suitcase.jpeg'); /* Adding the background image */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-position: center; /* Center the image */
+    
+    line-height: 1.6;
+    padding: 0 1rem;
+}
+
+h1, h2, h3 {
+    color: #4CAF50;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.app-header, .app-footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Found Items Section */
+#found-items-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 2rem auto;
+    max-width: 900px;
+}
+
+.found-item-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+    width: calc(30% - 2rem); /* 3 items per row with some margin */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.found-item-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.found-item-header {
+    text-align: center; /* Center-align the header */
+    padding: 1rem;
+}
+
+.found-item-header h3 {
+    margin-bottom: 0.5rem; /* Space between name and image */
+}
+
+.found-item-header img {
+    width: 200px;  /* Fixed width */
+    height: 100px; /* Fixed height */
+    object-fit: cover; /* Maintains aspect ratio */
+    border-radius: 8px;
+}
+
+.more-info-button {
+    margin: 0.5rem auto; /* Center the button */
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.more-info-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Details Section */
+.details {
+    padding: 1rem;
+    border-top: 1px solid #ddd;
+    display: none; /* Initially hide details */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .found-item-container {
+        width: calc(45% - 2rem); /* Adjust width for smaller screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .found-item-container {
+        width: 100%; /* Full width on very small screens */
+    }
+}

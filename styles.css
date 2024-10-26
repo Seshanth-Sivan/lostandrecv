@@ -1,0 +1,133 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+/* Header and Navbar */
+header {
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+    color: #4CAF50;
+}
+
+/* Hero Section */
+.hero {
+    position: relative; /* Positioning for absolute elements */
+    height: calc(100vh - 40px); /* Full viewport height minus top and bottom padding */
+    padding: 5px; /* Padding around the hero section */
+    overflow: hidden; /* Hide overflow */
+}
+
+.hero img {
+    width: 100%; /* Full width */
+    height: calc(100% - 40px); /* Full height minus the padding */
+    object-fit: cover; /* Cover entire area */
+    position: absolute; /* Positioning the image */
+    top: 20px; /* Align with the padding */
+    left: 0;
+}
+
+/* View Found Items Button */
+.view-found-button {
+    position: absolute; /* Position the button over the image */
+    top: 26%; /* Center vertically */
+    left: -1%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust positioning */
+}
+
+.view-found-button img {
+    width: 150px; /* Set a fixed width for the button image */
+    height: auto; /* Maintain aspect ratio */
+    transition: transform 0.3s ease; /* Smooth transition effect */
+}
+
+.view-found-button img:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Hero Text */
+.hero-text {
+    text-align: center; /* Center align the text */
+    margin: 20px 0; /* Margin around the text */
+}
+
+.hero-text h1 {
+    font-size: 64px; /* Increase font size for the heading */
+    margin: 0; /* Remove margin */
+}
+
+.hero-text p {
+    font-size: 22px; /* Increase font size for the paragraph */
+    margin: 20px 0;
+}
+
+.cta-button {
+    padding: 15px 30px; /* Increased button size */
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 20px; /* Increased button font size */
+    transition: background-color 0.3s ease;
+}
+
+/* About and Contact Sections */
+.about, .contact {
+    text-align: center; /* Center align the text */
+    margin: 40px 0; /* Space between sections */
+}
+
+.about h2, .contact h2 {
+    font-size: 28px; /* Increase font size for section headers */
+}
+
+/* Footer */
+footer {
+    background-color: #4CAF50;
+    text-align: center;
+    padding: 20px;
+    color: #fff;
+    position: relative;
+    width: 100%;
+}

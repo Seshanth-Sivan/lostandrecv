@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Found Items</title>
+    <link rel="stylesheet" href="lost.css">
+    <link rel="stylesheet" href="found-items.css"> <!-- Link to the external CSS for found items -->
+    <style>
+        /* Additional CSS for the semi-transparent container */
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin: 2rem auto;
+            max-width: 900px; /* Max width for the container */
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <h1 style="color: white;">Found Items</h1>
+        <nav>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="report-lost.html" class="nav-link">Report Lost Item</a>
+            <a href="found-items.html" class="nav-link">View Found Items</a>
+            <a href="lost-items.html" class="nav-link">View Lost Items</a>
+        </nav>
+    </header>
+    
+    <div class="container"> <!-- Added container div -->
+        <section id="found-items-section">
+            <!-- Found items will be displayed here -->
+        </section>
+    </div>
+
+    <footer class="app-footer">
+        <p>&copy; 2024 Lost and Found Management System</p>
+    </footer>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h3 id="modalItemName"></h3>
+            <img id="modalItemImage" src="" alt="" style="max-width: 100%; border-radius: 10px;">
+            <p id="modalItemDescription"></p>
+            <p>Date: <span id="modalItemDate"></span></p>
+            <p>Location: <span id="modalItemLocation"></span></p>
+            <p>Found By: <span id="modalItemFoundBy"></span></p>
+            <p>Contact: <span id="modalItemContact"></span></p>
+            <p>Found Location: <span id="modalItemFoundLocation"></span></p>
+        </div>
+    </div>
+
+    <script>
+        async function fetchFoundItems() {
+            const response = await fetch('/api/found-items');
+            const foundItems = await response.json();
+            const foundItemsSection = document.getElementById('found-items-section');
+            foundItemsSection.innerHTML = ''; // Clear previous items
+
+            foundItems.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('found-item-container'); // Add class for styling
+                itemDiv.innerHTML = `
+                    <div class="found-item-header">
+                        <h3>${item.name}</h3>
+                        <img src="/uploads/${item.image}" alt="${item.name}">
+                    </div>
+                    <button class="more-info-button" onclick="showModal('${item.name}', '/uploads/${item.image}', '${item.description}', '${item.date}', '${item.location}', '${item.foundDetails.foundBy}', '${item.foundDetails.contact}', '${item.foundDetails.foundLocation}')">More Info</button>
+                `;
+                foundItemsSection.appendChild(itemDiv);
+            });
+        }
+
+        function showModal(name, image, description, date, location, foundBy, contact, foundLocation) {
+            document.getElementById('modalItemName').innerText = name;
+            document.getElementById('modalItemImage').src = image;
+            document.getElementById('modalItemDescription').innerText = description;
+            document.getElementById('modalItemDate').innerText = date;
+            document.getElementById('modalItemLocation').innerText = location;
+            document.getElementById('modalItemFoundBy').innerText = foundBy;
+            document.getElementById('modalItemContact').innerText = contact;
+            document.getElementById('modalItemFoundLocation').innerText = foundLocation;
+
+            // Display the modal
+            document.getElementById('myModal').style.display = 'block';
+        }
+
+        // Close the modal when the user clicks on <span> (x)
+        document.getElementById('closeModal').onclick = function() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        // Close the modal when the user clicks anywhere outside of the modal
+        window.onclick = function(event) {
+            const modal = document.getElementById('myModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Fetch found items on page load
+        window.onload = fetchFoundItems;
+    </script>
+</body>
+</html>

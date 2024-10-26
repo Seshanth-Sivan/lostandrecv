@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Lost Items</title>
+    <link rel="stylesheet" href="lost.css">
+</head>
+<body background="suitcase.jpeg">
+    <header class="app-header">
+        <h1 style="color: #fefefe;">Lost Items</h1>
+        <nav>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="report-lost.html" class="nav-link">Report Lost Item</a>
+            <a href="found-items.html" class="nav-link">View Found Items</a>
+            <a href="lost-items.html" class="nav-link">View Lost Items</a>
+        </nav>
+    </header>
+    
+    <section id="lost-items-section">
+        <!-- Lost items will be displayed here -->
+    </section>
+
+    <!-- Modal for Mark as Done -->
+    <div id="mark-done-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Mark as Found</h2>
+            <form id="modal-form" onsubmit="event.preventDefault(); submitMarkAsDone();">
+                <input type="text" id="found-by" placeholder="Found By" required>
+                <input type="text" id="contact" placeholder="Contact" required>
+                <input type="text" id="found-location" placeholder="Location Found" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <p>&copy; 2024 Lost and Found Management System</p>
+    </footer>
+
+    <script>
+        let currentItemId; // Variable to store the current item ID
+
+        async function fetchLostItems() {
+            const response = await fetch('/api/lost-items');
+            const lostItems = await response.json();
+            const lostItemsSection = document.getElementById('lost-items-section');
+            lostItemsSection.innerHTML = ''; // Clear previous items
+
+            lostItems.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('lost-item-container'); // Add class for styling
+                itemDiv.innerHTML = `
+                    <div class="lost-item-details">
+                        <h3>${item.name}</h3> <!-- Name on the first line -->
+                        <img src="/uploads/${item.image}" alt="${item.name}"> <!-- Picture on the second line -->
+                        <p>${item.description}</p>
+                        <p>Date: ${new Date(item.date).toLocaleDateString()}</p>
+                        <p>Location: ${item.location}</p>
+                        <button class="more-info-button" onclick="openModal('${item._id}')">Mark as Found</button>
+                    </div>
+                `;
+                lostItemsSection.appendChild(itemDiv);
+            });
+        }
+
+        function openModal(itemId) {
+            currentItemId = itemId; // Store the current item ID
+            document.getElementById('mark-done-modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('mark-done-modal').style.display = 'none';
+            document.getElementById('modal-form').reset(); // Reset the form fields
+        }
+
+        async function submitMarkAsDone() {
+            const foundBy = document.getElementById('found-by').value;
+            const contact = document.getElementById('contact').value;
+            const foundLocation = document.getElementById('found-location').value;
+
+            if (!foundBy || !contact || !foundLocation) {
+                alert('All fields are required to mark as done.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/mark-done/${currentItemId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ foundBy, contact, foundLocation })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok' + response.statusText);
+                }
+
+                const result = await response.json();
+                alert(result.message);
+                closeModal(); // Close the modal after submission
+                fetchLostItems(); // Refresh the lost items
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error marking the item as done: ' + error.message);
+            }
+        }
+
+        // Fetch lost items on page load
+        window.onload = fetchLostItems;
+
+        // Close modal when clicking anywhere outside of the modal
+        window.onclick = function(event) {
+            const modal = document.getElementById('mark-done-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+    <style>
+        /* General Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('suitcase.jpeg'); /* Adding the background image */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-position: center; /* Center the image */
+    
+            line-height: 1.6;
+            padding: 0 1rem;
+        }
+
+        h1, h2, h3 {
+            color: #4CAF50;
+            font-family: 'Roboto', sans-serif;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-header, .app-footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        /* Lost Items Section */
+        #lost-items-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center items */
+            margin: 2rem auto;
+            max-width: 1000px; /* Adjusted max width */
+        }
+
+        .lost-item-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+            width: calc(30% - 2rem); /* 3 items per row with some margin */
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .lost-item-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .lost-item-details {
+            flex: 1;
+            padding: 1rem;
+        }
+
+        .lost-item-details img {
+            width: 100%;  /* Full width for responsive design */
+            height: auto; /* Maintain aspect ratio */
+            max-height: 150px; /* Set a maximum height */
+            object-fit: cover; /* Maintains aspect ratio */
+            border-radius: 8px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 500px; /* Maximum width */
+            border-radius: 8px; /* Rounded corners */
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Button Styles */
+        .more-info-button {
+            display: block;
+            margin: 0 auto;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .more-info-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Form Styles */
+        #modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Space between form elements */
+        }
+
+        #modal-form input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #modal-form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #modal-form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .lost-item-container {
+                width: calc(45% - 2rem); /* Two items per row on medium screens */
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .lost-item-container {
+                width: 100%; /* Full width on very small screens */
+            }
+        }
+    </style>
+</body>
+</html>

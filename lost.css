@@ -1,0 +1,229 @@
+/* Lost Items Section Styles */
+
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('suitcase.jpeg'); /* Adding the background image */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-position: center; /* Center the image */
+    
+    line-height: 1.6;
+    padding: 0 1rem;
+}
+
+h1, h2, h3 {
+    color: #4CAF50;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Header and Footer */
+.app-header, .app-footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Lost Items Section */
+#lost-items-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center align items */
+    margin: 2rem auto;
+    max-width: 900px; /* Maximum width for the section */
+}
+
+/* Individual Lost Item Container */
+.lost-item-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+    width: calc(30% - 2rem); /* 3 items per row with some margin */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lost-item-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Lost Item Details */
+.lost-item-details {
+    flex: 1;
+    padding: 1rem;
+}
+
+.lost-item-details img {
+    width: 100%;  /* Make image responsive */
+    height: 200px; /* Set fixed height */
+    object-fit: cover; /* Crop the image to cover the area */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.lost-item-details p {
+    margin: 0.75rem 0;
+    color: #555;
+    font-size: 1.05rem;
+}
+
+/* Button Styling */
+.lost-item-button {
+    margin-top: 1.25rem;
+    padding: 0.8rem;
+    background-color: #388E3C;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.lost-item-button:hover {
+    background-color: #2E7D32;
+    transform: scale(1.07);
+}
+
+/* Mark as Done Form */
+.mark-done-form {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: #f2f2f2;
+    border-radius: 10px;
+    display: none; /* Initially hidden */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.mark-done-form.active {
+    display: block; /* Show when active */
+}
+
+.mark-done-form input[type="text"] {
+    width: 100%;
+    padding: 0.9rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    transition: border-color 0.3s ease;
+}
+
+.mark-done-form input[type="text"]:focus {
+    border-color: #388E3C;
+    outline: none;
+    box-shadow: 0 0 10px rgba(56, 142, 60, 0.3);
+}
+
+.mark-done-form button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #388E3C;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.mark-done-form button:hover {
+    background-color: #2E7D32;
+    transform: scale(1.07);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .lost-item-container {
+        width: calc(50% - 2rem); /* Two items per row on medium screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .lost-item-container {
+        width: 100%; /* Full width on very small screens */
+    }
+}
+
+/* Lost Item Details Styles */
+
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    color: #388E3C;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+p {
+    margin: 0.75rem 0;
+}
+
+a {
+    text-decoration: none;
+    color: #388E3C;
+    font-weight: bold;
+}
+
+/* Header Section */
+.app-header {
+    background-color: #388E3C;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    border-radius: 0 0 40% 40%;
+}
+
+.nav-link {
+    color: white;
+    margin: 0 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffebcd;
+    transform: scale(1.07);
+}
+
+/* Lost Items Section */
+#lost-items-section {
+    margin: 2.5rem auto;
+    padding: 2.5rem;
+    width: 100%; /* Set to full width */
+    max-width: none; /* Remove max-width restriction */
+    background: #f9f9f9;
+    border-radius: 14px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+    display: flex; /* Added to align children flexibly */
+    flex-wrap: wrap; /* Allow wrapping of items */
+    justify-content: center; /* Ensure center alignment for two items */
+}
+
+/* Wrapper for each item */
+.lost-item-wrapper {
+    margin-bottom: 2.5rem; /* Space between each item */
+}

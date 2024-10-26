@@ -1,0 +1,80 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('suitcase.jpeg'); /* Adding the background image */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-position: center; /* Center the image */
+    
+    line-height: 1.6;
+    padding: 0 1rem;
+}
+
+h1, h2, h3 {
+    color: #4CAF50;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.app-header, .app-footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Lost Items Section */
+#lost-items-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* This ensures spacing between items */
+    margin: 2rem auto;
+    max-width: 900px;
+}
+
+.lost-item-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+    width: calc(30% - 2rem); /* 3 items per row with some margin */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lost-item-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.lost-item-details {
+    flex: 1;
+    padding: 1rem;
+}
+
+.lost-item-details img {
+    width: 200px;  /* Fixed width */
+    height: 100px; /* Fixed height */
+    object-fit: cover; /* Maintains aspect ratio */
+    border-radius: 8px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .lost-item-container {
+        width: calc(50% - 2rem); /* Two items per row on medium screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .lost-item-container {
+        width: 100%; /* Full width on very small screens */
+    }
+}

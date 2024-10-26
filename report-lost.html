@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Lost Item</title>
+    <link rel="stylesheet" href="lost.css">
+    <link rel="stylesheet" href="form.css"> <!-- Link to the external CSS for the form -->
+</head>
+<body background="suitcase.jpeg">
+    <header class="app-header">
+        <h1 style="color: white;">Report Lost Item</h1>
+        <nav>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="report-lost.html" class="nav-link">Report Lost Item</a>
+            <a href="found-items.html" class="nav-link">View Found Items</a>
+            <a href="lost-items.html" class="nav-link">View Lost Items</a>
+        </nav>
+    </header>
+    <section class="form-section">
+        <h2>Report a Lost Item</h2>
+        <form id="lost-item-form" enctype="multipart/form-data">
+            <label for="name">Item Name:</label>
+            <input type="text" id="name" required>
+            <label for="description">Description:</label>
+            <textarea id="description" required></textarea>
+            <label for="date">Date Lost:</label>
+            <input type="date" id="date" required>
+            <label for="location">Location Lost:</label>
+            <input type="text" id="location" required>
+            <label for="image">Image:</label>
+            <input type="file" id="image" required>
+            <button type="submit">Report Lost Item</button>
+        </form>
+    </section>
+    <footer class="app-footer">
+        <p>&copy; 2024 Lost and Found Management System</p>
+    </footer>
+    <script>
+        document.getElementById('lost-item-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('name').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('date', document.getElementById('date').value);
+            formData.append('location', document.getElementById('location').value);
+            formData.append('image', document.getElementById('image').files[0]);
+
+            const response = await fetch('/api/lost-item', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            alert(result.message);
+            document.getElementById('lost-item-form').reset();
+        });
+    </script>
+</body>
+</html>
